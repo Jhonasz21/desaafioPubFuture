@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,22 @@ public class ContaService {
 
     public Conta save(Conta conta) {
         return conta;
+    }
+
+    public Conta update(Conta newConta, Long id) throws NegativeArraySizeException{
+        Optional<Conta>updatedConta=contaRepository.findById(id)
+                .map(conta -> {
+                    conta.setSaldo(newConta.getSaldo());
+                    conta.setTipoConta(newConta.getTipoConta());
+                    conta.setInstituicaoFinanceira(newConta.getInstituicaoFinanceira());
+                    return conta;
+                });
+                if (updatedConta.isPresent()){
+                    contaRepository.save(updatedConta.get());
+
+                }else
+                    throw new NoSuchElementException();
+                return updatedConta.get();
     }
 }
 

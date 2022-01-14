@@ -14,6 +14,7 @@ public class Conta {
 
     @Enumerated(EnumType.STRING)
     private TipoConta tipoConta;
+    @Column
     private String instituicaoFinanceira;
 
 

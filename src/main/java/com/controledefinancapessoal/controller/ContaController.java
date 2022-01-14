@@ -30,6 +30,11 @@ public class ContaController {
 
 
     /* Consulta conta retorna dodas em uma lista*/
+    public ResponseEntity<List<Conta>> getAll() {
+        List<Conta> contas = new ArrayList<>();
+        contas = contaService.obterContas();
+        return new ResponseEntity<>(contas, HttpStatus.OK);
+    }
 
 
     /*Consulta Conta pelo id*/
@@ -59,16 +64,12 @@ public class ContaController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Conta> update(@PathVariable Long id, @RequestBody Conta  newConta) {
-        return contaService.findById(id)
-                .map(conta -> {
-                    conta.setSaldo(newConta.getSaldo());
-                    conta.setTipoConta(newConta.getTipoConta());
-                    conta.setInstituicaoFinanceira(newConta.getInstituicaoFinanceira());
-                    Conta contaUpdated = contaService.save(conta);
-                    return ResponseEntity.ok().body(contaUpdated);
-                }).orElse(ResponseEntity.notFound().build());
-
-
+   public ResponseEntity<Conta>update(@PathVariable Long id,@RequestBody Conta updatedConta){
+    try {
+    Conta conta = contaService.update(updatedConta,id);
+    return new ResponseEntity<Conta>(conta,HttpStatus.OK);
+    }catch (NoSuchElementException nsee){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+           }
+       }
     }
-}
