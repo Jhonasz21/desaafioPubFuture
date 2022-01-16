@@ -2,6 +2,7 @@ package com.controledefinancapessoal.service;
 
 
 
+import com.controledefinancapessoal.enums.TipoReceita;
 import com.controledefinancapessoal.model.Despesa;
 import com.controledefinancapessoal.model.Receita;
 import com.controledefinancapessoal.repository.ReceitaRepository;
@@ -50,13 +51,17 @@ public class ReceitaService<receitas> {
     }
 
 
-    public List<Receita>obterReceitas(Date startDate, Date endDate){
-        if(startDate != null && endDate != null){
+    public List<Receita>obterReceitas(Date startDate, Date endDate, TipoReceita tipoReceita){
+        if (tipoReceita != null) {
+            List<Receita> receita =  receitaRepository.findAllByTipoReceita(tipoReceita);
+            return receita;
+        }
+        if (startDate != null && endDate != null){
             List<Receita>receitas = receitaRepository
                     .findAllByDataRecebimentoBetween(startDate,endDate);
             return receitas;
         }
-        List<Receita>receitas = receitaRepository.findAll();
+        List<Receita>receitas= receitaRepository.findAll();
         return receitas;
     }
 

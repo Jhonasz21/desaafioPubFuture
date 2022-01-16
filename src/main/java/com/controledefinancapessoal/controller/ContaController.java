@@ -73,4 +73,12 @@ public class ContaController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
            }
        }
+
+       /*Listar saldo total*/
+    @GetMapping(path = "/total")
+    public ResponseEntity<Double> saldoTotal(){
+        double totalSaldo = contaService.calcularTotalSaldo();
+        return new ResponseEntity<>(totalSaldo, HttpStatus.OK);
+    }
+
     }

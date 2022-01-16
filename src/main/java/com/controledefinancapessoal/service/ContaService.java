@@ -2,6 +2,7 @@ package com.controledefinancapessoal.service;
 
 
 import com.controledefinancapessoal.model.Conta;
+import com.controledefinancapessoal.model.Receita;
 import com.controledefinancapessoal.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,6 @@ public class ContaService {
     }
 
 
-
     public Conta update(Conta newConta, Long id) throws NegativeArraySizeException{
         Optional<Conta>updatedConta=contaRepository.findById(id)
                 .map(conta -> {
@@ -57,6 +57,18 @@ public class ContaService {
                 }else
                     throw new NoSuchElementException();
                 return updatedConta.get();
+    }
+
+
+    public double calcularTotalSaldo() {
+        List<Conta> contas =  contaRepository.findAll();
+        double total = 0;
+
+        for (Conta conta: contas){
+            total += conta.getSaldo();
+        }
+
+        return total;
     }
 }
 
