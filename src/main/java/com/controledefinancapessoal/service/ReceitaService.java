@@ -2,6 +2,7 @@ package com.controledefinancapessoal.service;
 
 
 
+import com.controledefinancapessoal.model.Despesa;
 import com.controledefinancapessoal.model.Receita;
 import com.controledefinancapessoal.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,14 @@ public class ReceitaService<receitas> {
     }
 
 
+    public double calcularTotalReceita() {
+        List<Receita> receitas =  receitaRepository.findAll();
+        double total = 0;
 
+        for (Receita receita: receitas){
+            total += receita.getValor();
+        }
+
+        return total;
+    }
 }

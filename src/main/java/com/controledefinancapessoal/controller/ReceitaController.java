@@ -66,6 +66,10 @@ public class ReceitaController<list> {
     }
 
     /*listar total de receita*/
-
+    @GetMapping(path = "/total")
+    public ResponseEntity<Double> listarTotalReceita(){
+        double totalReceitas = receitaService.calcularTotalReceita();
+        return new ResponseEntity<>(totalReceitas, HttpStatus.OK);
+    }
 
 }
