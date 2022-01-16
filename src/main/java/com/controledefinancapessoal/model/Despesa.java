@@ -2,6 +2,7 @@ package com.controledefinancapessoal.model;
 
 
 import com.controledefinancapessoal.enums.TipoDespesa;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +14,9 @@ public class Despesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private double valor;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataPagamento;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataPagamentoEsperado;
 
     @Enumerated(EnumType.STRING)
@@ -37,7 +40,6 @@ public class Despesa {
         this.conta = conta;
     }
 
-
     public Integer getId() {
         return id;
     }
@@ -50,7 +52,7 @@ public class Despesa {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

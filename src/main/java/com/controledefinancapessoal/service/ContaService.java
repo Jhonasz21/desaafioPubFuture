@@ -42,9 +42,6 @@ public class ContaService {
     }
 
 
-    public Conta save(Conta conta) {
-        return conta;
-    }
 
     public Conta update(Conta newConta, Long id) throws NegativeArraySizeException{
         Optional<Conta>updatedConta=contaRepository.findById(id)

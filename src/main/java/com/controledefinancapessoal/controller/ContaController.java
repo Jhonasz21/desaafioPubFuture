@@ -30,6 +30,7 @@ public class ContaController {
 
 
     /* Consulta conta retorna dodas em uma lista*/
+    @GetMapping
     public ResponseEntity<List<Conta>> getAll() {
         List<Conta> contas = new ArrayList<>();
         contas = contaService.obterContas();

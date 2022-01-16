@@ -9,10 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/receita")
-public class ReceitaController {
+public class ReceitaController<list> {
 
     private ReceitaService receitaService;
 
@@ -27,19 +28,6 @@ public class ReceitaController {
         return new ResponseEntity<>(receita, HttpStatus.OK);
     }
 
-
-    /*editar receita*/
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<Receita>update(@PathVariable Long id, @RequestBody Receita updatedReceita){
-        try {
-            Receita receita = receitaService.update(updatedReceita,id);
-            return new ResponseEntity<Receita>(receita,HttpStatus.OK);
-        }catch (NoSuchElementException nsee){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-
     /*remover receita*/
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Optional<Receita>> deleteById(@PathVariable Long id) {
@@ -52,16 +40,28 @@ public class ReceitaController {
         }
     }
 
+    /*editar receita*/
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Receita> update(@PathVariable Long id, @RequestBody Receita updatedReceita) {
+        try {
+            Receita receita = receitaService.update(updatedReceita, id);
+            return new ResponseEntity<Receita>(receita, HttpStatus.OK);
+        } catch (NoSuchElementException nsee) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     /*listar receita por periodo datainicial-datafinal*/
     /*filtro por tipo de receita*/
     @GetMapping
-    public ResponseEntity<List<Receita>>gatAll(
-            @RequestParam(required = false)@DateTimeFormat(pattern = "dd/MM/yyyy")Date startDate,
-            @RequestParam(required = false)@DateTimeFormat(pattern = "dd/MM/yyyy") Date endDate
-    ){
-    List<Receita> receitas = new ArrayList<>();
-    receitas = receitaService.obterReceitas(startDate,endDate);
-    return new ResponseEntity<>(receitas,HttpStatus.OK);
+    public ResponseEntity<List<Receita>> getAll(
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date endDate
+    ) {
+        List<Receita> receitas = new ArrayList<>();
+        receitas = receitaService.obterReceitas(startDate, endDate);
+        return new ResponseEntity<>(receitas, HttpStatus.OK);
 
     }
 

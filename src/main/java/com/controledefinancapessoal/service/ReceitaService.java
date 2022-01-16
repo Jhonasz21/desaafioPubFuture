@@ -7,14 +7,11 @@ import com.controledefinancapessoal.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
-public class ReceitaService {
+public class ReceitaService<receitas> {
 
 
 
@@ -28,15 +25,9 @@ public class ReceitaService {
     }
 
 
-    public List<Receita> obterReceitas() {
-        List<Receita> receitas = receitaRepository.findAll();
-        return receitas;
-    }
-
     public void deleteById(Long id) {
         receitaRepository.deleteById(id);
     }
-
 
     public Receita update(Receita newReceita, Long id) throws NoSuchElementException {
         Optional<Receita>updatedReceita=receitaRepository.findById(id)
@@ -46,7 +37,7 @@ public class ReceitaService {
                     receita.setDataRecebimento(newReceita.getDataRecebimento());
                     receita.setDescricao(newReceita.getDescricao());
                     receita.setDataRecebimentoEsperado(newReceita.getDataRecebimentoEsperado());
-                    receita.setValor((double) newReceita.getValor());
+                    receita.setValor(newReceita.getValor());
                     return receita;
                 });
         if (updatedReceita.isPresent()){
@@ -61,10 +52,13 @@ public class ReceitaService {
     public List<Receita>obterReceitas(Date startDate, Date endDate){
         if(startDate != null && endDate != null){
             List<Receita>receitas = receitaRepository
-                    .findAllByDateRecebimentoBetween(startDate,endDate);
+                    .findAllByDataRecebimentoBetween(startDate,endDate);
             return receitas;
         }
         List<Receita>receitas = receitaRepository.findAll();
         return receitas;
     }
+
+
+
 }
