@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/receita")
+@RequestMapping(path = "/receitas")
 public class ReceitaController<list> {
 
     private ReceitaService receitaService;

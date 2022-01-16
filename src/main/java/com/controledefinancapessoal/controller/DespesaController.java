@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping(path = "/despesa")
+@RequestMapping(path = "/despesas")
 public class DespesaController {
 
     public DespesaService despesaService;
@@ -69,5 +69,9 @@ public class DespesaController {
 
 
     /*listar total de despesa*/
-
+    @GetMapping(path = "/total")
+    public ResponseEntity<Double> listarTotalDespesa(){
+        double totalDespesas = despesaService.calcularTotalDespesas();
+        return new ResponseEntity<>(totalDespesas, HttpStatus.OK);
+    }
 }

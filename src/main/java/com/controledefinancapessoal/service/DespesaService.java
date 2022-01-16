@@ -64,4 +64,15 @@ public class DespesaService {
         List<Despesa>despesas= despesaRepository.findAll();
         return despesas;
     }
+    public double calcularTotalDespesas() {
+        List<Despesa> despesas =  despesaRepository.findAll();
+        double total = 0;
+
+        for (Despesa despesa: despesas){
+            total += despesa.getValor();
+        }
+
+        return total;
+    }
+
 }
