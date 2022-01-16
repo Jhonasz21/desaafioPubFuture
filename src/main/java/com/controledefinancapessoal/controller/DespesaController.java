@@ -1,5 +1,6 @@
 package com.controledefinancapessoal.controller;
 
+import com.controledefinancapessoal.enums.TipoDespesa;
 import com.controledefinancapessoal.model.Despesa;
 import com.controledefinancapessoal.service.DespesaService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,11 +59,11 @@ public class DespesaController {
     @GetMapping
     public ResponseEntity<List<Despesa>> getAll(
             @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date endDate
-
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date endDate,
+            @RequestParam(required = false) TipoDespesa tipoDespesa
     ) {
         List<Despesa> despesas = new ArrayList<>();
-        despesas = despesaService.obterDespesa(startDate, endDate);
+        despesas = despesaService.obterDespesa(startDate, endDate,tipoDespesa);
         return new ResponseEntity<>(despesas, HttpStatus.OK);
     }
 

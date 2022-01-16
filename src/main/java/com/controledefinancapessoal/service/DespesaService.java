@@ -1,6 +1,7 @@
 package com.controledefinancapessoal.service;
 
 
+import com.controledefinancapessoal.enums.TipoDespesa;
 import com.controledefinancapessoal.model.Despesa;
 import com.controledefinancapessoal.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,11 @@ public class DespesaService {
         return updatedDespesa.get();
     }
 
-    public List<Despesa> obterDespesa(Date startDate, Date endDate) {
+    public List<Despesa> obterDespesa(Date startDate, Date endDate, TipoDespesa tipoDespesa) {
+        if (tipoDespesa != null) {
+            List<Despesa> despesas =  despesaRepository.findAllByTipoDespesa(tipoDespesa);
+            return despesas;
+        }
         if (startDate != null && endDate != null){
             List<Despesa>despesas = despesaRepository
                     .findAllByDataPagamentoBetween(startDate,endDate);
