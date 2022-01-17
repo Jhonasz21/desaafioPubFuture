@@ -3,13 +3,15 @@ package com.controledefinancapessoal.controller;
 import com.controledefinancapessoal.enums.TipoDespesa;
 import com.controledefinancapessoal.model.Despesa;
 import com.controledefinancapessoal.service.DespesaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
+@Api
 @RestController
 @RequestMapping(path = "/despesas")
 public class DespesaController {
@@ -21,6 +23,7 @@ public class DespesaController {
     }
 
     /*cadastrar despesa*/
+    @ApiOperation("Cadastra despesa")
     @PostMapping
     public ResponseEntity<Despesa> save(@RequestBody Despesa despesa) {
         despesaService.salvarDespesa(despesa);
@@ -29,6 +32,7 @@ public class DespesaController {
 
 
     /*editar despesa*/
+    @ApiOperation("Edita despesa por id")
     @PutMapping(path = "/{id}")
     public ResponseEntity<Despesa> update(@PathVariable Long id, @RequestBody Despesa updatedDespesa) {
         try {
@@ -41,6 +45,7 @@ public class DespesaController {
 
 
     /*remover despesa*/
+    @ApiOperation("Remove despesas por id")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Optional<Despesa>> deleteById(@PathVariable Long id) {
         try {
@@ -56,6 +61,7 @@ public class DespesaController {
      * por periodo data inicial e data final
      *  por tipó de despesa
      */
+    @ApiOperation("filtro por dataInicial e dataFinal / filtro por tipo de despesas")
     @GetMapping
     public ResponseEntity<List<Despesa>> getAll(
             @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date startDate,
@@ -69,6 +75,7 @@ public class DespesaController {
 
 
     /*listar total de despesa*/
+    @ApiOperation("Lista total de Despesas")
     @GetMapping(path = "/total")
     public ResponseEntity<Double> listarTotalDespesa(){
         double totalDespesas = despesaService.calcularTotalDespesas();

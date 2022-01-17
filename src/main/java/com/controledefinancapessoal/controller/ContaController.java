@@ -2,6 +2,8 @@ package com.controledefinancapessoal.controller;
 
 import com.controledefinancapessoal.model.Conta;
 import com.controledefinancapessoal.service.ContaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Api
 @RestController
 @RequestMapping(path = "/contas")
 public class ContaController {
@@ -22,6 +25,7 @@ public class ContaController {
     }
 
     /* Cadastra conta */
+    @ApiOperation("Cadastramento de contas")
     @PostMapping
     public ResponseEntity<Conta> save(@RequestBody Conta conta) {
         contaService.salvarConta(conta);
@@ -30,6 +34,7 @@ public class ContaController {
 
 
     /* Consulta conta retorna dodas em uma lista*/
+    @ApiOperation("Consulta conta retornando todas em uma lista")
     @GetMapping
     public ResponseEntity<List<Conta>> getAll() {
         List<Conta> contas = new ArrayList<>();
@@ -39,6 +44,7 @@ public class ContaController {
 
 
     /*Consulta Conta pelo id*/
+    @ApiOperation("Consulta Conta pelo id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<Conta>> getById(@PathVariable Long id) {
         Optional<Conta> conta;
@@ -52,7 +58,8 @@ public class ContaController {
 
     }
 
-    /*Deleta conta pelo id*/
+    /*Deleta conta por id*/
+    @ApiOperation("Deleta conta por id")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Optional<Conta>> deleteById(@PathVariable Long id) {
         try {
@@ -63,7 +70,7 @@ public class ContaController {
 
         }
     }
-
+    @ApiOperation("Edita conta por id")
     @PutMapping(path = "/{id}")
    public ResponseEntity<Conta>update(@PathVariable Long id,@RequestBody Conta updatedConta){
     try {
@@ -75,6 +82,7 @@ public class ContaController {
        }
 
        /*Listar saldo total*/
+    @ApiOperation("lista saldo total de conta")
     @GetMapping(path = "/total")
     public ResponseEntity<Double> saldoTotal(){
         double totalSaldo = contaService.calcularTotalSaldo();
